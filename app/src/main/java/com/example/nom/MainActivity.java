@@ -1,6 +1,7 @@
 package com.example.nom;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,5 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+    }
+
+    public void onBtnStartGame(View view) {
     }
 }
