@@ -10,13 +10,13 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
+import android.view.Choreographer;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class GameView extends View {
+public class GameView extends View implements Choreographer.FrameCallback {
     private static final float SCREEN_WIDTH = 9.0f;
     private static final float SCREEN_HEIGHT = 16.0f;
     private static final String TAG = GameView.class.getSimpleName();
@@ -41,18 +41,19 @@ public class GameView extends View {
         scheduleUpdate();
     }
 
+
     private void scheduleUpdate() {
-        postDelayed(gameLoopRunnable, 1000 / 60);
+        Choreographer.getInstance().postFrameCallback(this);
     }
 
-    private final Runnable gameLoopRunnable = new Runnable() {
-        @Override
-        public void run() {
-            update();
-            invalidate();
+    @Override
+    public void doFrame(long nanos) {
+        update();
+        invalidate();
+        if (isShown()) {
             scheduleUpdate();
         }
-    };
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -79,7 +80,6 @@ public class GameView extends View {
         drawDebugBackground(canvas);
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
     }
-
 
     private void update() {
         ballRect.offset(0.01f, 0.02f);
