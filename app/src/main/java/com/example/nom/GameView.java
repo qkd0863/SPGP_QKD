@@ -27,6 +27,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     private Bitmap ballBitmap;
     private final ArrayList<Ball> balls = new ArrayList<>();
+    private Fighter fighter;
     private static long previousNanos;
     public static float frameTime;
 
@@ -45,6 +46,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Resources res = getResources();
         Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
         Ball.setBitmap(ballBitmap);
+
+        Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
+        fighter = new Fighter(fighterBitmap);
 
         for (int i = 0; i < 10; i++) {
             balls.add(Ball.random());
@@ -98,6 +102,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         for (Ball ball : balls) {
             ball.draw(canvas);
         }
+        fighter.draw(canvas);
     }
 
     private void update() {
