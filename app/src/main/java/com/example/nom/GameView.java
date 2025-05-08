@@ -24,8 +24,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final Matrix transformMatrix = new Matrix();
 
     private Bitmap ballBitmap;
-    private final Ball ball1 = new Ball(4.5f, 8.0f, 0.04f, 0.06f);
-    private final Ball ball2 = new Ball(6.5f, 3.0f, 0.06f, 0.04f);
+    private final Ball ball1 = new Ball();
+    private final Ball ball2 = new Ball();
+
     public GameView(Context context) {
         super(context);
         init();
