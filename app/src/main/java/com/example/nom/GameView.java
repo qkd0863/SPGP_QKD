@@ -38,7 +38,21 @@ public class GameView extends View {
 
 
         ballBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.soccer_ball_240);
+        scheduleUpdate();
     }
+
+    private void scheduleUpdate() {
+        postDelayed(gameLoopRunnable, 1000 / 60);
+    }
+
+    private final Runnable gameLoopRunnable = new Runnable() {
+        @Override
+        public void run() {
+            update();
+            invalidate();
+            scheduleUpdate();
+        }
+    };
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -66,17 +80,9 @@ public class GameView extends View {
         canvas.drawBitmap(ballBitmap, null, ballRect, null);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            update();
-            invalidate();
-        }
-        return super.onTouchEvent(event);
-    }
 
     private void update() {
-        ballRect.offset(0.1f, 0.2f);
+        ballRect.offset(0.01f, 0.02f);
         Log.d(TAG, "Ball Rect = " + ballRect);
 
     }
