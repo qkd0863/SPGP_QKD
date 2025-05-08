@@ -17,6 +17,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class GameView extends View implements Choreographer.FrameCallback {
     public static final float SCREEN_WIDTH = 9.0f;
     public static final float SCREEN_HEIGHT = 16.0f;
@@ -24,8 +26,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final Matrix transformMatrix = new Matrix();
 
     private Bitmap ballBitmap;
-    private final Ball ball1 = new Ball();
-    private final Ball ball2 = new Ball();
+    private final ArrayList<Ball> balls = new ArrayList<>();
 
     public GameView(Context context) {
         super(context);
@@ -42,6 +43,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Resources res = getResources();
         Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
         Ball.setBitmap(ballBitmap);
+
+        balls.add(Ball.random());
+        balls.add(Ball.random());
+
         scheduleUpdate();
     }
 
@@ -82,13 +87,15 @@ public class GameView extends View implements Choreographer.FrameCallback {
         super.onDraw(canvas);
         canvas.setMatrix(transformMatrix);
         drawDebugBackground(canvas);
-        ball1.draw(canvas);
-        ball2.draw(canvas);
+        for (Ball ball : balls) {
+            ball.draw(canvas);
+        }
     }
 
     private void update() {
-        ball1.update();
-        ball2.update();
+        for (Ball ball : balls) {
+            ball.update();
+        }
     }
 
     private RectF borderRect;
