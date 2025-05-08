@@ -9,7 +9,7 @@ import java.util.Random;
 public class Ball {
     private final RectF dstRect = new RectF();
     private static final float BALL_RADIUS = 1.0f;
-    private static final float SPEED = 7.0f / 60;
+    private static final float SPEED = 7.0f; // 초당 7.0 unit 을 움직이는 속도.
     private float dx, dy;
     private static final Random random = new Random();
 
@@ -34,23 +34,25 @@ public class Ball {
     }
 
     public void update() {
+        float dx = this.dx * GameView.frameTime;
+        float dy = this.dy * GameView.frameTime;
         dstRect.offset(dx, dy);
         if (dx > 0) {
             if (dstRect.right > GameView.SCREEN_WIDTH) { // Alt+Enter -> Make GameView.SCREEN_WIDTH public
-                dx = -dx;
+                this.dx = -this.dx;
             }
         } else {
             if (dstRect.left < 0) {
-                dx = -dx;
+                this.dx = -this.dx;
             }
         }
         if (dy > 0) {
             if (dstRect.bottom > GameView.SCREEN_HEIGHT) {
-                dy = -dy;
+                this.dy = -this.dy;
             }
         } else {
             if (dstRect.top < 0) {
-                dy = -dy;
+                this.dy = -this.dy;
             }
         }
     }

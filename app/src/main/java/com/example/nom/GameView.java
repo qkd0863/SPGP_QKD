@@ -27,6 +27,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     private Bitmap ballBitmap;
     private final ArrayList<Ball> balls = new ArrayList<>();
+    private static long previousNanos;
+    public static float frameTime;
 
     public GameView(Context context) {
         super(context);
@@ -44,8 +46,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
         Ball.setBitmap(ballBitmap);
 
-        balls.add(Ball.random());
-        balls.add(Ball.random());
+        for (int i = 0; i < 10; i++) {
+            balls.add(Ball.random());
+        }
 
         scheduleUpdate();
     }
@@ -57,8 +60,13 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public void doFrame(long nanos) {
-        update();
-        invalidate();
+        Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
+        if (previousNanos != 0) {
+            frameTime = (nanos - previousNanos) / 1_000_000_000f;
+            update();
+            invalidate();
+        }
+        previousNanos = nanos;
         if (isShown()) {
             scheduleUpdate();
         }
