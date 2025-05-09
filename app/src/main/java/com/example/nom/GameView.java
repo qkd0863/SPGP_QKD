@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class GameView extends View implements Choreographer.FrameCallback {
 
     private static final String TAG = GameView.class.getSimpleName();
-    private final Matrix transformMatrix = new Matrix();
 
     private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
     private static long previousNanos;
@@ -76,26 +75,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        float view_ratio = (float) w / (float) h;
-        float game_ratio = Metrics.SCREEN_WIDTH / Metrics.SCREEN_HEIGHT;
-
-        transformMatrix.reset();
-        if (view_ratio > game_ratio) {
-            float scale = h / Metrics.SCREEN_HEIGHT;
-            transformMatrix.preTranslate((w - h * game_ratio) / 2, 0);
-            transformMatrix.preScale(scale, scale);
-        } else {
-            float scale = w / Metrics.SCREEN_WIDTH;
-            transformMatrix.preTranslate(0, (h - w / game_ratio) / 2);
-            transformMatrix.preScale(scale, scale);
-        }
+        Metrics.onSize(w, h);
     }
 
     @Override
     public void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         canvas.save();
-        canvas.setMatrix(transformMatrix);
+        Metrics.concat(canvas);
         if (BuildConfig.DEBUG) {
             drawDebugBackground(canvas);
         }
