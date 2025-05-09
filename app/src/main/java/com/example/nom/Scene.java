@@ -22,4 +22,11 @@ public class Scene {
     public boolean onTouchEvent(MotionEvent event) {
         return false;
     }
+
+    public void push() {
+        GameView.view.pushScene(this);
+    }
+    public static Scene pop() {
+        return GameView.view.popScene();
+    }
 }

@@ -11,7 +11,7 @@ public class SubScene extends Scene {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        GameView.view.popScene();
+        pop();
         return false;
     }
 }
