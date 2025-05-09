@@ -7,8 +7,7 @@ import android.graphics.Canvas;
 
 import java.util.ArrayList;
 
-public class MainScene {
-    private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
+public class MainScene extends Scene {
     private Fighter fighter;
 
     public MainScene(GameView gameView) {
@@ -24,18 +23,6 @@ public class MainScene {
             gameObjects.add(Ball.random());
         }
         gameObjects.add(fighter);
-
-    }
-
-    public void update() {
-        for (IGameObject gobj : gameObjects) {
-            gobj.update();
-        }
-    }
-    public void draw(Canvas canvas) {
-        for (IGameObject gobj : gameObjects) {
-            gobj.draw(canvas);
-        }
     }
 
 

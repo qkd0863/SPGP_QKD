@@ -22,7 +22,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
     private static long previousNanos;
     public static float frameTime;
-    private MainScene scene;
+    private Scene scene;
 
     public GameView(Context context) {
         super(context);
@@ -122,4 +122,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
     }
 
+    public void setCurrentScene(Scene scene) {
+        this.scene = scene;
+    }
 }
