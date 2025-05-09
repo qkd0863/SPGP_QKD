@@ -10,6 +10,11 @@ public class Scene {
     private static final String TAG = Scene.class.getSimpleName();
     protected final ArrayList<IGameObject> gameObjects = new ArrayList<>();
 
+    public void add(IGameObject gameObject) {
+        gameObjects.add(gameObject);
+        Log.d(TAG, gameObjects.size() + " objects in " + this);
+    }
+
     public void update() {
         for (IGameObject gobj : gameObjects) {
             gobj.update();

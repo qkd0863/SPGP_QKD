@@ -22,7 +22,8 @@ public class MainScene extends Scene {
         for (int i = 0; i < 10; i++) {
             gameObjects.add(Ball.random());
         }
-        gameObjects.add(fighter);
+        add(fighter);
+
     }
 
 
