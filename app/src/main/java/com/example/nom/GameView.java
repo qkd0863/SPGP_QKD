@@ -95,12 +95,27 @@ public class GameView extends View implements Choreographer.FrameCallback {
     @Override
     public void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
+        canvas.save();
         canvas.setMatrix(transformMatrix);
         drawDebugBackground(canvas);
         for (IGameObject gobj : gameObjects) {
             gobj.draw(canvas);
         }
+        canvas.restore();
+        drawDebugInfo(canvas);
     }
+
+    private void drawDebugInfo(Canvas canvas) {
+        if (fpsPaint == null) {
+            fpsPaint = new Paint();
+            fpsPaint.setColor(Color.BLUE);
+            fpsPaint.setTextSize(100f);
+        }
+
+        int fps = (int) (1.0f / frameTime);
+        canvas.drawText("FPS: " + fps, 100f, 200f, fpsPaint);
+    }
+
 
     private void update() {
         for (IGameObject gobj : gameObjects) {
@@ -109,7 +124,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     private RectF borderRect;
-    private Paint borderPaint, gridPaint;
+    private Paint borderPaint, gridPaint, fpsPaint;
 
     private void drawDebugBackground(@NonNull Canvas canvas) {
         if (borderRect == null) {
