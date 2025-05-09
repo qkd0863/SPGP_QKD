@@ -10,14 +10,14 @@ import com.example.nom.framework.BitmapPool;
 import com.example.nom.framework.GameView;
 import com.example.nom.framework.IGameObject;
 import com.example.nom.framework.Metrics;
+import com.example.nom.framework.Sprite;
 
-public class Fighter implements IGameObject {
-    private final Bitmap bitmap;
-    private final RectF dstRect = new RectF();
+public class Fighter extends Sprite {
+    private static final float RADIUS = 125f;
+    private float angle;
 
     public Fighter() {
-        Resources res = GameView.view.getResources();
-        bitmap = BitmapPool.get(R.mipmap.plane_240);
+        super(R.mipmap.plane_240);
 
         float r = 125f;
         float cx = Metrics.width / 2;
@@ -28,7 +28,7 @@ public class Fighter implements IGameObject {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, null, dstRect, null);
+        super.draw(canvas); // 직접 그려도 되고 super 를 불러도 된다.
     }
 
     public void update() {
