@@ -12,7 +12,7 @@ public class Fighter implements IGameObject {
 
     public Fighter() {
         Resources res = GameView.view.getResources();
-        bitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
+        bitmap = BitmapPool.get(R.mipmap.plane_240);
         float cx = 500f, y = 1200f;
         float r = 125f;
         dstRect.set(cx-r, y, cx+r, y+2*r);
