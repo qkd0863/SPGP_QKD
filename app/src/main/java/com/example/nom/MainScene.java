@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
+
     private Fighter fighter;
 
     public MainScene() {
+        Metrics.setGameSize(900, 1600);
         fighter = new Fighter();
 
 
