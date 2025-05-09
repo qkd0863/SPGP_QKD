@@ -10,8 +10,8 @@ public class Fighter implements IGameObject {
 
     public Fighter(Bitmap bitmap) {
         this.bitmap = bitmap;
-        float cx = 5.0f, y = 12.0f;
-        float r = 1.25f;
+        float cx = 500f, y = 1200f;
+        float r = 125f;
         dstRect.set(cx-r, y, cx+r, y+2*r);
     }
 
