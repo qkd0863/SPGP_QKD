@@ -1,13 +1,9 @@
-package com.example.nom;
+package com.example.nom.Nom.game;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
+import com.example.nom.framework.Metrics;
+import com.example.nom.framework.Scene;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();

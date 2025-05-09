@@ -1,10 +1,9 @@
-package com.example.nom;
+package com.example.nom.framework;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Choreographer;
@@ -13,6 +12,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.nom.BuildConfig;
 
 import java.util.ArrayList;
 

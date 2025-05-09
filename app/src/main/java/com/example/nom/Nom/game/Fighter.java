@@ -1,10 +1,15 @@
-package com.example.nom;
+package com.example.nom.Nom.game;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+
+import com.example.nom.R;
+import com.example.nom.framework.BitmapPool;
+import com.example.nom.framework.GameView;
+import com.example.nom.framework.IGameObject;
+import com.example.nom.framework.Metrics;
 
 public class Fighter implements IGameObject {
     private final Bitmap bitmap;

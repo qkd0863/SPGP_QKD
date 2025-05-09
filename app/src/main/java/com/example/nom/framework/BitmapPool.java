@@ -1,4 +1,4 @@
-package com.example.nom;
+package com.example.nom.framework;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

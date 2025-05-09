@@ -1,4 +1,4 @@
-package com.example.nom;
+package com.example.nom.framework;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.WindowInsetsController;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.nom.Nom.game.MainScene;
 
 public class GameActivity extends AppCompatActivity {
 

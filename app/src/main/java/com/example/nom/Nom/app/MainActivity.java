@@ -1,10 +1,13 @@
-package com.example.nom;
+package com.example.nom.Nom.app;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.nom.R;
+import com.example.nom.framework.GameActivity;
 
 public class MainActivity extends AppCompatActivity {
 

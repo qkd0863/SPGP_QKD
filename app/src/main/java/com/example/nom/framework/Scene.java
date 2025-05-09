@@ -1,4 +1,4 @@
-package com.example.nom;
+package com.example.nom.framework;
 
 import android.graphics.Canvas;
 import android.util.Log;
