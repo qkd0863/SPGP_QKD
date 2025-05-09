@@ -97,12 +97,16 @@ public class GameView extends View implements Choreographer.FrameCallback {
         super.onDraw(canvas);
         canvas.save();
         canvas.setMatrix(transformMatrix);
-        drawDebugBackground(canvas);
+        if (BuildConfig.DEBUG) {
+            drawDebugBackground(canvas);
+        }
         for (IGameObject gobj : gameObjects) {
             gobj.draw(canvas);
         }
         canvas.restore();
-        drawDebugInfo(canvas);
+        if (BuildConfig.DEBUG) {
+            drawDebugInfo(canvas);
+        }
     }
 
     private void drawDebugInfo(Canvas canvas) {

@@ -7,6 +7,7 @@ android {
     compileSdk = 35
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     defaultConfig {
         applicationId = "com.example.nom"
