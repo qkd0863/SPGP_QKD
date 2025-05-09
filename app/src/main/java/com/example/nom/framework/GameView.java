@@ -69,7 +69,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public void doFrame(long nanos) {
-        Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
+        //Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
         if (previousNanos != 0) {
             frameTime = (nanos - previousNanos) / 1_000_000_000f;
             update();
