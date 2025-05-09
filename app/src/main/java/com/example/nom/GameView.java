@@ -1,12 +1,8 @@
 package com.example.nom;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -26,6 +22,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
     private static long previousNanos;
     public static float frameTime;
+    private MainScene scene;
 
     public GameView(Context context) {
         super(context);
@@ -38,18 +35,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     public void init() {
 
-
-        Resources res = getResources();
-        Bitmap ballBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
-        Ball.setBitmap(ballBitmap);
-
-        Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
-        gameObjects.add(new Fighter(fighterBitmap));
-
-        for (int i = 0; i < 10; i++) {
-            gameObjects.add(Ball.random());
-        }
-
+        this.scene = new MainScene(this);
         scheduleUpdate();
     }
 
@@ -86,9 +72,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (BuildConfig.DEBUG) {
             drawDebugBackground(canvas);
         }
-        for (IGameObject gobj : gameObjects) {
-            gobj.draw(canvas);
-        }
+        scene.draw(canvas);
         canvas.restore();
         if (BuildConfig.DEBUG) {
             drawDebugInfo(canvas);
@@ -108,9 +92,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
 
     private void update() {
-        for (IGameObject gobj : gameObjects) {
-            gobj.update();
-        }
+        scene.update();
     }
 
     private RectF borderRect;
