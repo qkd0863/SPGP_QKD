@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
-public class Fighter {
+public class Fighter implements IGameObject {
     private final Bitmap bitmap;
     private final RectF dstRect = new RectF();
 
@@ -17,5 +17,9 @@ public class Fighter {
 
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, null, dstRect, null);
+    }
+
+    public void update() {
+
     }
 }

@@ -25,9 +25,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     private final Matrix transformMatrix = new Matrix();
 
-    private Bitmap ballBitmap;
-    private final ArrayList<Ball> balls = new ArrayList<>();
-    private Fighter fighter;
+    private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
     private static long previousNanos;
     public static float frameTime;
 
@@ -48,10 +46,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Ball.setBitmap(ballBitmap);
 
         Bitmap fighterBitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
-        fighter = new Fighter(fighterBitmap);
+        gameObjects.add(new Fighter(fighterBitmap));
 
         for (int i = 0; i < 10; i++) {
-            balls.add(Ball.random());
+            gameObjects.add(Ball.random());
         }
 
         scheduleUpdate();
@@ -99,15 +97,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
         super.onDraw(canvas);
         canvas.setMatrix(transformMatrix);
         drawDebugBackground(canvas);
-        for (Ball ball : balls) {
-            ball.draw(canvas);
+        for (IGameObject gobj : gameObjects) {
+            gobj.draw(canvas);
         }
-        fighter.draw(canvas);
     }
 
     private void update() {
-        for (Ball ball : balls) {
-            ball.update();
+        for (IGameObject gobj : gameObjects) {
+            gobj.update();
         }
     }
 
