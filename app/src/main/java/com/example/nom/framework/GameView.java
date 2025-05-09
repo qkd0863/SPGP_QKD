@@ -5,15 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.example.nom.BuildConfig;
 
 import java.util.ArrayList;
 
@@ -25,6 +22,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private static long previousNanos;
     public static float frameTime;
     public static GameView view;
+    public static boolean drawsDebugStuffs = false;
     private ArrayList<Scene> sceneStack = new ArrayList<>();
 
     public GameView(Context context) {
@@ -92,7 +90,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         super.onDraw(canvas);
         canvas.save();
         Metrics.concat(canvas);
-        if (BuildConfig.DEBUG) {
+        if (drawsDebugStuffs) {
             drawDebugBackground(canvas);
         }
         Scene scene = getTopScene();
@@ -100,7 +98,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             scene.draw(canvas);
         }
         canvas.restore();
-        if (BuildConfig.DEBUG) {
+        if (drawsDebugStuffs) {
             drawDebugInfo(canvas);
         }
     }

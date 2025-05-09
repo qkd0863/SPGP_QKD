@@ -2,8 +2,10 @@ package com.example.nom.Nom.game;
 
 import android.view.MotionEvent;
 
+import com.example.nom.BuildConfig;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Scene;
+import com.example.nom.framework.GameView;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -12,6 +14,7 @@ public class MainScene extends Scene {
 
     public MainScene() {
         Metrics.setGameSize(900, 1600);
+        GameView.drawsDebugStuffs = BuildConfig.DEBUG;
         fighter = new Fighter();
 
 

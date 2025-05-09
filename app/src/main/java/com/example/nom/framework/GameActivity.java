@@ -9,8 +9,6 @@ import android.view.WindowInsetsController;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nom.Nom.game.MainScene;
-
 public class GameActivity extends AppCompatActivity {
 
     private GameView gameView;
@@ -19,7 +17,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameView = new GameView(this);
-        new MainScene().push();
+
         setContentView(gameView);
 
         setFullScreen();
