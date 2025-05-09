@@ -1,6 +1,7 @@
 package com.example.nom;
 
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
@@ -18,4 +19,7 @@ public class Scene {
         }
     }
 
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
+    }
 }

@@ -9,11 +9,11 @@ public class Metrics {
     public static final float GRID_UNIT = 100f;
     private static final Matrix transformMatrix = new Matrix();
     private static final Matrix invertedMatrix = new Matrix();
-    //private static final float[] pointsBuffer = new float[2];
+    private static final float[] pointsBuffer = new float[2];
 
     public static void onSize(int w, int h) {
 
-        float view_ratio = (float)w / (float)h;
+        float view_ratio = (float) w / (float) h;
         float game_ratio = Metrics.SCREEN_WIDTH / Metrics.SCREEN_HEIGHT;
 
         if (view_ratio > game_ratio) {
@@ -28,18 +28,19 @@ public class Metrics {
         transformMatrix.invert(invertedMatrix);
     }
 
-//    public static float[] fromScreen(float x, float y) {
-//        pointsBuffer[0] = x;
-//        pointsBuffer[1] = y;
-//        invertedMatrix.mapPoints(pointsBuffer);
-//        return pointsBuffer;
-//    }
-//    public static float[] toScreen(float x, float y) {
-//        pointsBuffer[0] = x;
-//        pointsBuffer[1] = y;
-//        transformMatrix.mapPoints(pointsBuffer);
-//        return pointsBuffer;
-//    }
+    public static float[] fromScreen(float x, float y) {
+        pointsBuffer[0] = x;
+        pointsBuffer[1] = y;
+        invertedMatrix.mapPoints(pointsBuffer);
+        return pointsBuffer;
+    }
+
+    public static float[] toScreen(float x, float y) {
+        pointsBuffer[0] = x;
+        pointsBuffer[1] = y;
+        transformMatrix.mapPoints(pointsBuffer);
+        return pointsBuffer;
+    }
 
     public static void concat(Canvas canvas) {
         canvas.concat(transformMatrix);

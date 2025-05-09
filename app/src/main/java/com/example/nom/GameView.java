@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
     private static long previousNanos;
     public static float frameTime;
-    private Scene scene;
+    public static GameView view;
+    private ArrayList<Scene> sceneStack = new ArrayList<>();
 
     public GameView(Context context) {
         super(context);
@@ -34,11 +36,20 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     public void init() {
-
-        this.scene = new MainScene(this);
+        GameView.view = this;
         scheduleUpdate();
     }
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Scene scene = getTopScene();
+        if (scene != null) {
+            return scene.onTouchEvent(event);
+        }
+
+        return super.onTouchEvent(event);
+    }
 
     private void scheduleUpdate() {
         Choreographer.getInstance().postFrameCallback(this);
@@ -72,7 +83,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (BuildConfig.DEBUG) {
             drawDebugBackground(canvas);
         }
-        scene.draw(canvas);
+        Scene scene = getTopScene();
+        if (scene != null) {
+            scene.draw(canvas);
+        }
         canvas.restore();
         if (BuildConfig.DEBUG) {
             drawDebugInfo(canvas);
@@ -92,7 +106,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
 
     private void update() {
-        scene.update();
+        Scene scene = getTopScene();
+        if (scene != null) {
+            scene.update();
+        }
     }
 
     private RectF borderRect;
@@ -122,7 +139,19 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
     }
 
-    public void setCurrentScene(Scene scene) {
-        this.scene = scene;
+    public void pushScene(Scene scene) {
+        this.sceneStack.add(scene);
+    }
+    public Scene popScene() {
+        int last = sceneStack.size() - 1;
+        if (last < 0) return null;
+        return sceneStack.remove(last);
+    }
+    public Scene getTopScene() {
+        //return sceneStack.getLast();
+        // Call requires API level 35 (current min is 24): java. util. ArrayList#getLast
+        int last = sceneStack.size() - 1;
+        if (last < 0) return null;
+        return sceneStack.get(last);
     }
 }
