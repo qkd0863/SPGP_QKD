@@ -55,6 +55,17 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Choreographer.getInstance().postFrameCallback(this);
     }
 
+    public void onBackPressed() {
+        int last = sceneStack.size() - 1;
+        if (last < 0) return; // finish activity here ?
+
+        Scene scene = sceneStack.get(last);
+        boolean handled = scene.onBackPressed();
+        if (handled) return;
+
+        popScene();
+    }
+
     @Override
     public void doFrame(long nanos) {
         Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
@@ -140,18 +151,59 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     public void pushScene(Scene scene) {
-        this.sceneStack.add(scene);
+        int last = sceneStack.size() - 1;
+        if (last >= 0) {
+            sceneStack.get(last).onPause();
+        }
+        sceneStack.add(scene);
+        scene.onEnter();
     }
+
     public Scene popScene() {
         int last = sceneStack.size() - 1;
-        if (last < 0) return null;
-        return sceneStack.remove(last);
+        if (last < 0) {
+            notifyEmptyStack();
+            return null;
+        }
+        Scene top = sceneStack.remove(last);
+        top.onExit();
+        if (last >= 1) {
+            sceneStack.get(last - 1).onResume();
+        } else {
+            notifyEmptyStack();
+        }
+        return top;
     }
+
+    private void notifyEmptyStack() {
+        if (emptyStackListener != null) {
+            emptyStackListener.onEmptyStack();
+        }
+    }
+
+    public void changeScene(Scene scene) {
+        int last = sceneStack.size() - 1;
+        if (last < 0) return;
+        sceneStack.get(last).onExit();
+        sceneStack.add(scene);
+        scene.onEnter();
+    }
+
     public Scene getTopScene() {
         //return sceneStack.getLast();
         // Call requires API level 35 (current min is 24): java. util. ArrayList#getLast
         int last = sceneStack.size() - 1;
         if (last < 0) return null;
         return sceneStack.get(last);
+    }
+
+    public interface OnEmptyStackListener {
+        public void onEmptyStack();
+    }
+
+    private OnEmptyStackListener emptyStackListener;
+
+    public void setEmptyStackListener(OnEmptyStackListener emptyStackListener) {
+        this.emptyStackListener = emptyStackListener;
     }
 }
