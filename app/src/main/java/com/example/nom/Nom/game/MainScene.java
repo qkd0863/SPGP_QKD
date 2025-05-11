@@ -3,9 +3,11 @@ package com.example.nom.Nom.game;
 import android.view.MotionEvent;
 
 import com.example.nom.BuildConfig;
+import com.example.nom.R;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Scene;
 import com.example.nom.framework.GameView;
+import com.example.nom.framework.AnimeSprite;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -22,7 +24,9 @@ public class MainScene extends Scene {
             gameObjects.add(Ball.random());
         }
         add(fighter);
-
+        AnimeSprite animSprite = new AnimeSprite(R.mipmap.enemy_01, 10);
+        animSprite.setPosition(450f, 450f, 90f);
+        add(animSprite);
     }
 
 
