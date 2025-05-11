@@ -12,24 +12,33 @@ import com.example.nom.framework.IGameObject;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Scene;
 
+import java.util.ArrayList;
+
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
 
     private Fighter fighter;
 
+    public enum Layer {
+        enemy, fighter;
+        public static final int COUNT = values().length;
+    }
+
     public MainScene() {
         Metrics.setGameSize(900, 1600);
+        initLayers(Layer.COUNT);
         GameView.drawsDebugStuffs = BuildConfig.DEBUG;
-        fighter = new Fighter();
-
+        this.fighter = new Fighter();
+        add(Layer.fighter.ordinal(), fighter);
+        //add(Layer.controller.ordinal(), new EnemyGenerator());
 
         for (int i = 0; i < 10; i++) {
-            gameObjects.add(Ball.random());
+            add(Layer.enemy.ordinal(), Ball.random());
         }
-        add(fighter);
+
         AnimeSprite animSprite = new AnimeSprite(R.mipmap.enemy_01, 10);
         animSprite.setPosition(450f, 450f, 90f);
-        add(animSprite);
+        add(Layer.enemy.ordinal(), animSprite);
     }
 
 
@@ -40,16 +49,14 @@ public class MainScene extends Scene {
     }
 
     private void checkCollision() {
-        for (IGameObject o1 : gameObjects) {
-            if (!(o1 instanceof Ball)) {
-                continue;
-            }
-            Ball ball = (Ball) o1;
-//            boolean removed = false;
+        ArrayList<IGameObject> enemies = getLayer(Layer.enemy.ordinal());
+        for (int i1 = enemies.size() - 1; i1 >= 0; i1--) {
+            if (!(enemies.get(i1) instanceof Ball)) continue;
+            Ball ball = (Ball) enemies.get(i1);
 
             if (CollisionHelper.collides(ball, fighter)) {
                 Log.d(TAG, "Collision !!");
-                remove(ball);
+                remove(Layer.enemy.ordinal(), ball);
 //                    removed = true;
                 break;
             }
