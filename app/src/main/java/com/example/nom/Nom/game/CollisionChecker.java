@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class CollisionChecker implements IGameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
+    private final MainScene scene;
 
+    public CollisionChecker(MainScene mainScene) {
+        this.scene = mainScene;
+    }
     @Override
     public void update() {
-        Scene scene = Scene.top();
-        if (scene == null) return;
-
-
         ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);
 
         Fighter player = null;
@@ -36,7 +36,7 @@ public class CollisionChecker implements IGameObject {
             if (CollisionHelper.collides(ball, player)) {
                 Log.d(TAG, "Collision !!");
                 scene.remove(ball);
-//                    removed = true;
+                scene.addScore(10);
                 break;
             }
 
