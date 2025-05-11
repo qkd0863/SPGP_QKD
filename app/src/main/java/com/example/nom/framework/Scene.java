@@ -20,7 +20,8 @@ public class Scene {
         }
     }
 
-    public void add(int layerIndex, IGameObject gameObject) {
+    public <E extends Enum<E>> void add(E layer, IGameObject gameObject) {
+        int layerIndex = layer.ordinal();
         ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.add(gameObject);
         //Log.d(TAG, gameObjects.size() + " objects in " + this);
@@ -70,13 +71,20 @@ public class Scene {
         return total;
     }
 
-    public void remove(int layerIndex, IGameObject gobj) {
+    public <E extends Enum<E>> void remove(E layer, IGameObject gobj) {
+        int layerIndex = layer.ordinal();
         ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.remove(gobj);
     }
 
-    public ArrayList<IGameObject> getLayer(int layerIndex) {
+    public <E extends Enum<E>> ArrayList<IGameObject> objectsAt(E layer) {
+        int layerIndex = layer.ordinal();
         return layers.get(layerIndex);
+    }
+
+    public <E extends Enum<E>> int countAt(E layer) {
+        int layerIndex = layer.ordinal();
+        return layers.get(layerIndex).size();
     }
 
     public boolean onTouchEvent(MotionEvent event) {

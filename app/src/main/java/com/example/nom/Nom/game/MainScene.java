@@ -29,16 +29,16 @@ public class MainScene extends Scene {
         initLayers(Layer.COUNT);
         GameView.drawsDebugStuffs = BuildConfig.DEBUG;
         this.fighter = new Fighter();
-        add(Layer.fighter.ordinal(), fighter);
+        add(Layer.fighter, fighter);
         //add(Layer.controller.ordinal(), new EnemyGenerator());
 
         for (int i = 0; i < 10; i++) {
-            add(Layer.enemy.ordinal(), Ball.random());
+            add(Layer.enemy, Ball.random());
         }
 
         AnimeSprite animSprite = new AnimeSprite(R.mipmap.enemy_01, 10);
         animSprite.setPosition(450f, 450f, 90f);
-        add(Layer.enemy.ordinal(), animSprite);
+        add(Layer.enemy, animSprite);
     }
 
 
@@ -49,14 +49,14 @@ public class MainScene extends Scene {
     }
 
     private void checkCollision() {
-        ArrayList<IGameObject> enemies = getLayer(Layer.enemy.ordinal());
+        ArrayList<IGameObject> enemies = objectsAt(Layer.enemy);
         for (int i1 = enemies.size() - 1; i1 >= 0; i1--) {
             if (!(enemies.get(i1) instanceof Ball)) continue;
             Ball ball = (Ball) enemies.get(i1);
 
             if (CollisionHelper.collides(ball, fighter)) {
                 Log.d(TAG, "Collision !!");
-                remove(Layer.enemy.ordinal(), ball);
+                remove(Layer.enemy, ball);
 //                    removed = true;
                 break;
             }
