@@ -5,12 +5,12 @@ import android.view.MotionEvent;
 
 import com.example.nom.BuildConfig;
 import com.example.nom.R;
+import com.example.nom.framework.AnimeSprite;
 import com.example.nom.framework.CollisionHelper;
+import com.example.nom.framework.GameView;
 import com.example.nom.framework.IGameObject;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Scene;
-import com.example.nom.framework.GameView;
-import com.example.nom.framework.AnimeSprite;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();

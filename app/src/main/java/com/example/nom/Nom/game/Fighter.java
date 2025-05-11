@@ -1,18 +1,14 @@
 package com.example.nom.Nom.game;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import com.example.nom.R;
-import com.example.nom.framework.BitmapPool;
-import com.example.nom.framework.GameView;
-import com.example.nom.framework.IGameObject;
+import com.example.nom.framework.IBoxCollidable;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Sprite;
 
-public class Fighter extends Sprite {
+public class Fighter extends Sprite implements IBoxCollidable {
     private static final float RADIUS = 125f;
     private float angle;
 
@@ -26,7 +22,9 @@ public class Fighter extends Sprite {
 
         dstRect.set(cx - r, y, cx + r, y + 2 * r);
     }
-
+    public RectF getCollisionRect() {
+        return dstRect;
+    }
     public void draw(Canvas canvas) {
         super.draw(canvas); // 직접 그려도 되고 super 를 불러도 된다.
     }
