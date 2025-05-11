@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +25,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public static GameView view;
     public static boolean drawsDebugStuffs = false;
     private ArrayList<Scene> sceneStack = new ArrayList<>();
+    private boolean running = true;
 
     public GameView(Context context) {
         super(context);
@@ -74,7 +76,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             invalidate();
         }
         previousNanos = nanos;
-        if (isShown()) {
+        if (running) {
             scheduleUpdate();
         }
     }
@@ -111,7 +113,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
 
         int fps = (int) (1.0f / frameTime);
-        int count = scene.count();
+        int count = scene != null ? scene.count() : 0;
         canvas.drawText("FPS: " + fps + " objs: " + count, 100f, 200f, fpsPaint);
     }
 
@@ -123,6 +125,28 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
     }
 
+    public void pauseGame() {
+        running = false;
+        Scene scene = getTopScene();
+        if (scene != null) {
+            scene.onPause();
+        }
+    }
+
+    public void resumeGame() {
+        if (running) return;
+        running = true;
+        previousNanos = 0;
+        scheduleUpdate();
+        Scene scene = getTopScene();
+        if (scene != null) {
+            scene.onResume();
+        }
+    }
+
+    public void destroyGame() {
+        popAllScenes();
+    }
 
     private Paint borderPaint, gridPaint, fpsPaint;
 
@@ -173,10 +197,26 @@ public class GameView extends View implements Choreographer.FrameCallback {
         return top;
     }
 
+
+    public void popAllScenes() {
+        int count = sceneStack.size();
+        Log.d(TAG, "in popAllScenes(), scenes count = " + count);
+        for (int i = count - 1; i >= 0; i--) {
+            Scene scene = sceneStack.get(i);
+            scene.onExit();
+        }
+        sceneStack.clear();
+        if (count > 0) {
+            notifyEmptyStack();
+        }
+    }
+
     private void notifyEmptyStack() {
         if (emptyStackListener != null) {
             emptyStackListener.onEmptyStack();
+            Log.d(TAG, "notifyEmptyStack() is called");
         }
+
     }
 
     public void changeScene(Scene scene) {
