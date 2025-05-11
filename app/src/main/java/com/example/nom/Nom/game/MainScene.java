@@ -11,6 +11,7 @@ import com.example.nom.framework.GameView;
 import com.example.nom.framework.IGameObject;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Scene;
+import com.example.nom.framework.Score;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,10 @@ public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
 
     private Fighter fighter;
+    private final Score score;
 
     public enum Layer {
-        enemy, fighter;
+        enemy, fighter, ui;
         public static final int COUNT = values().length;
     }
 
@@ -28,9 +30,13 @@ public class MainScene extends Scene {
         Metrics.setGameSize(900, 1600);
         initLayers(Layer.COUNT);
         GameView.drawsDebugStuffs = BuildConfig.DEBUG;
+
         this.fighter = new Fighter();
         add(fighter);
-        //add(Layer.controller.ordinal(), new EnemyGenerator());
+
+        this.score = new Score(R.mipmap.number_24x32, 850f, 50f, 60f);
+        score.setScore(12345);
+        add(Layer.ui, score);
 
         for (int i = 0; i < 10; i++) {
             add(Ball.random());
