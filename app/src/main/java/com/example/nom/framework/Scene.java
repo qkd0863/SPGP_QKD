@@ -119,6 +119,9 @@ public class Scene {
     public static Scene pop() {
         return GameView.view.popScene();
     }
+    public static Scene top() {
+        return GameView.view.getTopScene();
+    }
 
     public void onEnter() {
         Log.v(TAG, "onEnter: " + getClass().getSimpleName());
