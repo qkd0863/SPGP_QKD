@@ -26,6 +26,10 @@ public class Scene {
         }
     }
 
+    public int count() {
+        return gameObjects.size();
+    }
+
     public boolean onTouchEvent(MotionEvent event) {
         return false;
     }
