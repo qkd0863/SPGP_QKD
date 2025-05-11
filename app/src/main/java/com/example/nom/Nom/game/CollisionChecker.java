@@ -36,7 +36,7 @@ public class CollisionChecker implements IGameObject {
             if (CollisionHelper.collides(ball, player)) {
                 Log.d(TAG, "Collision !!");
                 scene.remove(ball);
-                scene.addScore(10);
+                scene.addScore(200);
                 break;
             }
 
