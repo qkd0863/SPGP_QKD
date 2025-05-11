@@ -1,9 +1,12 @@
 package com.example.nom.Nom.game;
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.nom.BuildConfig;
 import com.example.nom.R;
+import com.example.nom.framework.CollisionHelper;
+import com.example.nom.framework.IGameObject;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Scene;
 import com.example.nom.framework.GameView;
@@ -29,6 +32,30 @@ public class MainScene extends Scene {
         add(animSprite);
     }
 
+
+    @Override
+    public void update() {
+        super.update();
+        checkCollision();
+    }
+
+    private void checkCollision() {
+        for (IGameObject o1 : gameObjects) {
+            if (!(o1 instanceof Ball)) {
+                continue;
+            }
+            Ball ball = (Ball) o1;
+//            boolean removed = false;
+
+            if (CollisionHelper.collides(ball, fighter)) {
+                Log.d(TAG, "Collision !!");
+                remove(ball);
+//                    removed = true;
+                break;
+            }
+
+        }
+    }
 
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
