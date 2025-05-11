@@ -24,8 +24,52 @@ public class Scene {
         int layerIndex = layer.ordinal();
         ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
         gameObjects.add(gameObject);
-        //Log.d(TAG, gameObjects.size() + " objects in " + this);
     }
+
+    public void add(ILayerProvider<?> gameObject) {
+        Enum<?> e = gameObject.getLayer();
+        int layerIndex = e.ordinal();
+        ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
+        gameObjects.add(gameObject);
+    }
+
+    public <E extends Enum<E>> void remove(E layer, IGameObject gobj) {
+        int layerIndex = layer.ordinal();
+        ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
+        gameObjects.remove(gobj);
+    }
+
+    public void remove(ILayerProvider<?> gameObject) {
+        Enum<?> e = gameObject.getLayer();
+        int layerIndex = e.ordinal();
+        remove(layerIndex, gameObject);
+    }
+
+    private void remove(int layerIndex, IGameObject gobj) {
+        ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
+        gameObjects.remove(gobj);
+
+    }
+
+
+    public <E extends Enum<E>> ArrayList<IGameObject> objectsAt(E layer) {
+        int layerIndex = layer.ordinal();
+        return layers.get(layerIndex);
+    }
+
+    public int count() {
+        int total = 0;
+        for (ArrayList<IGameObject> layer : layers) {
+            total += layer.size();
+        }
+        return total;
+    }
+
+    public <E extends Enum<E>> int countAt(E layer) {
+        int layerIndex = layer.ordinal();
+        return layers.get(layerIndex).size();
+    }
+
 
     public void update() {
         for (ArrayList<IGameObject> gameObjects : layers) {
@@ -63,29 +107,6 @@ public class Scene {
 
     protected static Paint bboxPaint;
 
-    public int count() {
-        int total = 0;
-        for (ArrayList<IGameObject> layer : layers) {
-            total += layer.size();
-        }
-        return total;
-    }
-
-    public <E extends Enum<E>> void remove(E layer, IGameObject gobj) {
-        int layerIndex = layer.ordinal();
-        ArrayList<IGameObject> gameObjects = layers.get(layerIndex);
-        gameObjects.remove(gobj);
-    }
-
-    public <E extends Enum<E>> ArrayList<IGameObject> objectsAt(E layer) {
-        int layerIndex = layer.ordinal();
-        return layers.get(layerIndex);
-    }
-
-    public <E extends Enum<E>> int countAt(E layer) {
-        int layerIndex = layer.ordinal();
-        return layers.get(layerIndex).size();
-    }
 
     public boolean onTouchEvent(MotionEvent event) {
         return false;

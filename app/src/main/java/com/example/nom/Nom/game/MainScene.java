@@ -29,11 +29,11 @@ public class MainScene extends Scene {
         initLayers(Layer.COUNT);
         GameView.drawsDebugStuffs = BuildConfig.DEBUG;
         this.fighter = new Fighter();
-        add(Layer.fighter, fighter);
+        add(fighter);
         //add(Layer.controller.ordinal(), new EnemyGenerator());
 
         for (int i = 0; i < 10; i++) {
-            add(Layer.enemy, Ball.random());
+            add(Ball.random());
         }
 
         AnimeSprite animSprite = new AnimeSprite(R.mipmap.enemy_01, 10);
@@ -56,7 +56,7 @@ public class MainScene extends Scene {
 
             if (CollisionHelper.collides(ball, fighter)) {
                 Log.d(TAG, "Collision !!");
-                remove(Layer.enemy, ball);
+                remove(ball);
 //                    removed = true;
                 break;
             }
