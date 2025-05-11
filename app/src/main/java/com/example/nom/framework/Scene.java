@@ -29,6 +29,9 @@ public class Scene {
     public int count() {
         return gameObjects.size();
     }
+    public void remove(IGameObject gobj) {
+        gameObjects.remove(gobj);
+    }
 
     public boolean onTouchEvent(MotionEvent event) {
         return false;
