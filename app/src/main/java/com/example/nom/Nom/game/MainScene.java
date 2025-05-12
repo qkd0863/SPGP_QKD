@@ -43,7 +43,13 @@ public class MainScene extends Scene {
         add(Layer.ui, score);
         add(Layer.enemy, animSprite);
         add(Layer.controller, new CollisionChecker(this));
+
+        add(Layer.enemy, new TurnPoint(0, Metrics.height - 100));
+        add(Layer.enemy, new TurnPoint(Metrics.width-100, 0));
+        add(Layer.enemy, new TurnPoint(Metrics.width-100, Metrics.height - 100));
+        add(Layer.enemy, new TurnPoint(0, 0));
     }
+
     public void addScore(int amount) {
         score.add(amount);
     }

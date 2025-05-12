@@ -16,9 +16,10 @@ public class Fighter extends Sprite implements IBoxCollidable, ILayerProvider<Ma
     public Fighter() {
         super(R.mipmap.plane_240);
 
-        float r = 125f;
-        float cx = Metrics.width / 2;
-        float y = 2 * Metrics.height / 3;
+        float r = 50f;
+        float cx = r * 2;
+        float y = Metrics.height-4*r;
+        this.dx = 10;
 
 
         dstRect.set(cx - r, y, cx + r, y + 2 * r);
@@ -33,6 +34,7 @@ public class Fighter extends Sprite implements IBoxCollidable, ILayerProvider<Ma
     }
 
     public void update() {
+        super.update();
 
     }
 
