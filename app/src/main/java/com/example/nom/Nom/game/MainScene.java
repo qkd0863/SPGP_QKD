@@ -1,14 +1,19 @@
 package com.example.nom.Nom.game;
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.nom.BuildConfig;
 import com.example.nom.R;
 import com.example.nom.framework.AnimeSprite;
+import com.example.nom.framework.CollisionHelper;
 import com.example.nom.framework.GameView;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Scene;
 import com.example.nom.framework.Score;
+import com.example.nom.framework.IGameObject;
+
+import java.util.ArrayList;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -55,6 +60,23 @@ public class MainScene extends Scene {
 
     public void addScore(int amount) {
         score.add(amount);
+    }
+
+
+    public void checkTurnPointCollision() {
+        ArrayList<IGameObject> controllers = objectsAt(Layer.controller);
+        Fighter player = this.player;
+
+        for (IGameObject obj : controllers) {
+            if (!(obj instanceof TurnPoint)) continue;
+            TurnPoint point = (TurnPoint) obj;
+            if (CollisionHelper.collides(point, player)) {
+                Log.d(TAG, "🔁 TurnPoint 충돌 - 방향 전환");
+                player.setDx(point.getPointx());
+                player.setDy(point.getPointy());
+                break;
+            }
+        }
     }
 
     public boolean onTouchEvent(MotionEvent event) {

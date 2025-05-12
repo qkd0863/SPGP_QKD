@@ -46,18 +46,18 @@ public class CollisionChecker implements IGameObject {
 
         }
 
-        for (int i1 = points.size() - 1; i1 >= 0; i1--) {
-            if (!(points.get(i1) instanceof TurnPoint)) continue;
-            TurnPoint point = (TurnPoint) points.get(i1);
-
-            if (CollisionHelper.collides(point, player)) {
-                Log.d(TAG, "Collision !!");
-                player.setDx(point.getPointx());
-                player.setDy(point.getPointy());
-                break;
-            }
-
-        }
+//        for (int i1 = points.size() - 1; i1 >= 0; i1--) {
+//            if (!(points.get(i1) instanceof TurnPoint)) continue;
+//            TurnPoint point = (TurnPoint) points.get(i1);
+//
+//            if (CollisionHelper.collides(point, player)) {
+//                Log.d(TAG, "Collision !!");
+//                player.setDx(point.getPointx());
+//                player.setDy(point.getPointy());
+//                break;
+//            }
+//
+//        }
 
 
     }
