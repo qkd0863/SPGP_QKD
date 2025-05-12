@@ -8,16 +8,21 @@ import com.example.nom.framework.IBoxCollidable;
 import com.example.nom.framework.ILayerProvider;
 import com.example.nom.framework.Sprite;
 
-public class TurnPoint extends Sprite implements  IBoxCollidable, ILayerProvider<MainScene.Layer> {
-    private float x, y, r;
+public class TurnPoint extends Sprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
+
+    private float pointx, pointy;
+    private boolean Active = false;
 
 
-    public TurnPoint(float x, float y) {
+    public TurnPoint(float x, float y, float pointx, float pointy) {
         super(R.mipmap.turn_point);
         this.x = x;
         this.y = y;
-        this.r = 50;
-        dstRect.set(x ,y, x + 2*r, y + 2*r);
+        this.pointx = pointx;
+        this.pointy = pointy;
+
+        this.radius = 50;
+        dstRect.set(x, y, x + 2 * radius, y + 2 * radius);
     }
 
     public RectF getCollisionRect() {
@@ -32,13 +37,24 @@ public class TurnPoint extends Sprite implements  IBoxCollidable, ILayerProvider
 
     }
 
-    public float getR()
-    {
-        return r;
-    }
-
     @Override
     public MainScene.Layer getLayer() {
-        return MainScene.Layer.enemy;
+        return MainScene.Layer.controller;
+    }
+
+    public boolean isActive() {
+        return Active;
+    }
+
+    public void setActive(boolean active) {
+        Active = active;
+    }
+
+    public float getPointx() {
+        return pointx;
+    }
+
+    public float getPointy() {
+        return pointy;
     }
 }

@@ -18,7 +18,7 @@ public class Fighter extends Sprite implements IBoxCollidable, ILayerProvider<Ma
 
         float r = 50f;
         float cx = r * 2;
-        float y = Metrics.height-4*r;
+        float y = Metrics.height - 4 * r;
         this.dx = 10;
 
 
@@ -36,6 +36,20 @@ public class Fighter extends Sprite implements IBoxCollidable, ILayerProvider<Ma
     public void update() {
         super.update();
 
+    }
+
+    public void setDx(float _dx) {
+        this.dx = _dx;
+    }
+    public void setDy(float _dy) {
+        this.dy = _dy;
+    }
+
+    public void setX(float _x) {
+        this.x = _x;
+    }
+    public void setY(float _y) {
+        this.y = _y;
     }
 
     @Override

@@ -13,8 +13,9 @@ import com.example.nom.framework.Score;
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
 
-    private Fighter fighter;
+    private Fighter player;
     private final Score score;
+    private float speed = 200;
 
     public enum Layer {
         enemy, fighter, ui, controller;
@@ -26,8 +27,10 @@ public class MainScene extends Scene {
         initLayers(Layer.COUNT);
         GameView.drawsDebugStuffs = BuildConfig.DEBUG;
 
-        this.fighter = new Fighter();
-        add(fighter);
+        this.player = new Fighter();
+        add(player);
+        player.setX(800);
+        player.setY(Metrics.height);
 
         this.score = new Score(R.mipmap.number_24x32, 850f, 50f, 60f);
         score.setScore(0);
@@ -44,10 +47,10 @@ public class MainScene extends Scene {
         add(Layer.enemy, animSprite);
         add(Layer.controller, new CollisionChecker(this));
 
-        add(Layer.enemy, new TurnPoint(0, Metrics.height - 100));
-        add(Layer.enemy, new TurnPoint(Metrics.width-100, 0));
-        add(Layer.enemy, new TurnPoint(Metrics.width-100, Metrics.height - 100));
-        add(Layer.enemy, new TurnPoint(0, 0));
+        add(Layer.controller, new TurnPoint(0, Metrics.height - 100, speed, 0));
+        add(Layer.controller, new TurnPoint(Metrics.width - 100, 0, -speed, 0));
+        add(Layer.controller, new TurnPoint(Metrics.width - 100, Metrics.height - 100, 0, -speed));
+        add(Layer.controller, new TurnPoint(0, 0, 0, speed));
     }
 
     public void addScore(int amount) {
