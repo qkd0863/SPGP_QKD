@@ -38,8 +38,9 @@ public class Sprite implements IGameObject {
 
     @Override
     public void update() {
-        float timedDx = dx * GameView.frameTime;
-        float timedDy = dy * GameView.frameTime;
+        float timedDx = dx * (GameView.view.getFrameTime() > 0 ? GameView.view.getFrameTime() : 0.016f);
+        float timedDy = dy * (GameView.view.getFrameTime() > 0 ? GameView.view.getFrameTime() : 0.016f);
+
         x += timedDx;
         y += timedDy;
         dstRect.offset(timedDx, timedDy);

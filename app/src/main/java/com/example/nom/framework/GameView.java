@@ -20,8 +20,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
 
     private final ArrayList<IGameObject> gameObjects = new ArrayList<>();
-    private static long previousNanos;
-    public static float frameTime;
+    private  long previousNanos;
+    public  float frameTime;
     public static GameView view;
     public static boolean drawsDebugStuffs = false;
     private ArrayList<Scene> sceneStack = new ArrayList<>();
@@ -34,6 +34,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public void init() {
@@ -69,7 +70,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public void doFrame(long nanos) {
-        //Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
+        Log.d(TAG, "Nanos = " + nanos + " frameTime=" + frameTime);
         if (previousNanos != 0) {
             frameTime = (nanos - previousNanos) / 1_000_000_000f;
             update();
@@ -243,5 +244,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     public void setEmptyStackListener(OnEmptyStackListener emptyStackListener) {
         this.emptyStackListener = emptyStackListener;
+    }
+
+
+    public float getFrameTime() {
+        return frameTime;
     }
 }
