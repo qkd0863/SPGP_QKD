@@ -66,7 +66,7 @@ public class MainScene extends Scene {
             if (!(obj instanceof TurnPoint)) continue;
             TurnPoint point = (TurnPoint) obj;
             if (CollisionHelper.collides(point, player)) {
-                Log.d(TAG, "🔁 TurnPoint 충돌 - 방향 전환");
+                Log.d(TAG, "TurnPoint 충돌 - 방향 전환");
                 player.setDx(point.getPointx());
                 player.setDy(point.getPointy());
                 break;
