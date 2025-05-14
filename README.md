@@ -20,7 +20,7 @@
 
 게임 플레이 중 무작위로 날아오는 사각형과 장애물을 회피하며 최대한 오래 생존하는 게임이다
 
-![image](https://github.com/user-attachments/assets/03563c33-ba55-4276-bbbb-3080f9e9ea2e)
+![image](https://github.com/user-attachments/assets/ea7d8451-a43d-4c34-91a2-0f89bfc33a66)
 
 장애물은 2종류가 존재한다
 
