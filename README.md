@@ -10,13 +10,13 @@
 
 ![image](https://github.com/user-attachments/assets/366bca21-38a7-44a3-af06-2ad1d30efbf2)
 
-플레이어는 사각형의 끝부분에 도달하면 화면을 터치하여 사각형의 다른변으로 이동한다
+플레이어는 사각형의 끝부분에 도달하면 점프 버튼을 터치하여 사각형의 다른변으로 이동한다
 
 ![image](https://github.com/user-attachments/assets/21fe378b-89ed-417e-a745-e023a42ace5b)
 
 ![image](https://github.com/user-attachments/assets/3554d1d6-c770-493f-bf9e-f400b95ddf4a)
 
-화면을 터치하여 다른 변으로 넘어간다
+점프 버튼을 터치하여 다른 변으로 넘어간다
 
 게임 플레이 중 무작위로 날아오는 사각형과 장애물을 회피하며 최대한 오래 생존하는 게임이다
 
