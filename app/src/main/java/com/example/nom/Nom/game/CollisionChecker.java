@@ -21,10 +21,10 @@ public class CollisionChecker implements IGameObject {
         ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);
         ArrayList<IGameObject> points = scene.objectsAt(MainScene.Layer.controller);
 
-        Fighter player = null;
+        Player player = null;
         for (int i = enemies.size() - 1; i >= 0; i--) {
-            if (enemies.get(i) instanceof Fighter) {
-                player = (Fighter) enemies.get(i);
+            if (enemies.get(i) instanceof Player) {
+                player = (Player) enemies.get(i);
                 break;
             }
         }

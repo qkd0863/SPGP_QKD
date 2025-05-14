@@ -8,13 +8,12 @@ import com.example.nom.framework.AnimeSprite;
 import com.example.nom.framework.IBoxCollidable;
 import com.example.nom.framework.ILayerProvider;
 import com.example.nom.framework.Metrics;
-import com.example.nom.framework.Sprite;
 
-public class Fighter extends AnimeSprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
+public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
     private static final float RADIUS = 125f;
     private float angle;
 
-    public Fighter() {
+    public Player() {
         super(R.mipmap.cookie_player_run, 8, 4);
 
 

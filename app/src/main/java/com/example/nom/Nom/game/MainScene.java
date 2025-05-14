@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
 
-    private Fighter player;
+    private Player player;
     private final Score score;
     private float speed = 200;
 
@@ -31,7 +31,7 @@ public class MainScene extends Scene {
         initLayers(Layer.COUNT);
         GameView.drawsDebugStuffs = BuildConfig.DEBUG;
 
-        this.player = new Fighter();
+        this.player = new Player();
         add(player);
         player.setX(800);
         player.setY(Metrics.height);
@@ -60,7 +60,7 @@ public class MainScene extends Scene {
 
     public void checkTurnPointCollision() {
         ArrayList<IGameObject> controllers = objectsAt(Layer.controller);
-        Fighter player = this.player;
+        Player player = this.player;
 
         for (IGameObject obj : controllers) {
             if (!(obj instanceof TurnPoint)) continue;
