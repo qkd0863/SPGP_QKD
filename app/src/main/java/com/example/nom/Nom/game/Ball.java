@@ -24,7 +24,7 @@ public class Ball extends Sprite implements IBoxCollidable , ILayerProvider<Main
     }
 
     public Ball(float centerX, float centerY, float angle_degree) {
-        super(R.mipmap.soccer_ball_240);
+        super(R.mipmap.enemy);
         setPosition(centerX, centerY, BALL_RADIUS);
         double radian = Math.toRadians(angle_degree);
         this.dx = SPEED * (float) Math.cos(radian);
