@@ -4,22 +4,24 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import com.example.nom.R;
+import com.example.nom.framework.AnimeSprite;
 import com.example.nom.framework.IBoxCollidable;
 import com.example.nom.framework.ILayerProvider;
 import com.example.nom.framework.Metrics;
 import com.example.nom.framework.Sprite;
 
-public class Fighter extends Sprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
+public class Fighter extends AnimeSprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
     private static final float RADIUS = 125f;
     private float angle;
 
     public Fighter() {
-        super(R.mipmap.plane_240);
+        super(R.mipmap.cookie_player_run, 8, 4);
+
 
         float r = 50f;
         float cx = r * 2;
         float y = Metrics.height - 4 * r;
-        this.dx = 10;
+        this.dx = 200;
 
 
         dstRect.set(cx - r, y, cx + r, y + 2 * r);
