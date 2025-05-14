@@ -10,20 +10,20 @@ import com.example.nom.framework.Sprite;
 
 import java.util.Random;
 
-public class Ball extends Sprite implements IBoxCollidable , ILayerProvider<MainScene.Layer> {
+public class Enemy extends Sprite implements IBoxCollidable , ILayerProvider<MainScene.Layer> {
 
     private static final float BALL_RADIUS = 100f;
     private static final float SPEED = 700f; // 초당 700 unit 을 움직이는 속도.
 
     private static final Random random = new Random();
 
-    public static Ball random() {
-        return new Ball(random.nextFloat() * Metrics.width,
+    public static Enemy random() {
+        return new Enemy(random.nextFloat() * Metrics.width,
                 random.nextFloat() * Metrics.height,
                 random.nextFloat() * 360);
     }
 
-    public Ball(float centerX, float centerY, float angle_degree) {
+    public Enemy(float centerX, float centerY, float angle_degree) {
         super(R.mipmap.enemy);
         setPosition(centerX, centerY, BALL_RADIUS);
         double radian = Math.toRadians(angle_degree);

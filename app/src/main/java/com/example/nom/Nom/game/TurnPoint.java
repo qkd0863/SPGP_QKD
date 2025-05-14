@@ -11,8 +11,6 @@ import com.example.nom.framework.Sprite;
 public class TurnPoint extends Sprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
 
     private float pointx, pointy;
-    private boolean Active = false;
-
 
     public TurnPoint(float x, float y, float pointx, float pointy) {
         super(R.mipmap.turn_point);
@@ -40,14 +38,6 @@ public class TurnPoint extends Sprite implements IBoxCollidable, ILayerProvider<
     @Override
     public MainScene.Layer getLayer() {
         return MainScene.Layer.controller;
-    }
-
-    public boolean isActive() {
-        return Active;
-    }
-
-    public void setActive(boolean active) {
-        Active = active;
     }
 
     public float getPointx() {

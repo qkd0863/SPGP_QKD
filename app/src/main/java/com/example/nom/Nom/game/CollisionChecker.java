@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.nom.framework.CollisionHelper;
 import com.example.nom.framework.IGameObject;
-import com.example.nom.framework.Scene;
 
 import java.util.ArrayList;
 
@@ -34,8 +33,8 @@ public class CollisionChecker implements IGameObject {
 
 
         for (int i1 = enemies.size() - 1; i1 >= 0; i1--) {
-            if (!(enemies.get(i1) instanceof Ball)) continue;
-            Ball ball = (Ball) enemies.get(i1);
+            if (!(enemies.get(i1) instanceof Enemy)) continue;
+            Enemy ball = (Enemy) enemies.get(i1);
 
             if (CollisionHelper.collides(ball, player)) {
                 Log.d(TAG, "Collision !!");

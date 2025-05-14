@@ -5,7 +5,6 @@ import android.view.MotionEvent;
 
 import com.example.nom.BuildConfig;
 import com.example.nom.R;
-import com.example.nom.framework.AnimeSprite;
 import com.example.nom.framework.CollisionHelper;
 import com.example.nom.framework.GameView;
 import com.example.nom.framework.Metrics;
@@ -42,7 +41,7 @@ public class MainScene extends Scene {
 
 
         for (int i = 0; i < 10; i++) {
-            add(Ball.random());
+            add(Enemy.random());
         }
 
         add(Layer.ui, score);
@@ -76,17 +75,7 @@ public class MainScene extends Scene {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-                float[] xy = Metrics.fromScreen(event.getX(), event.getY());
-                if (xy[0] < 100 && xy[1] < 100) {
-                    new SubScene().push();
-                    return false;
-                }
 
-                return true;
-        }
         return false;
     }
 
