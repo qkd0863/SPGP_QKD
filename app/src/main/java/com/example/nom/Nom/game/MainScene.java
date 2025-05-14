@@ -45,11 +45,7 @@ public class MainScene extends Scene {
             add(Ball.random());
         }
 
-        AnimeSprite animSprite = new AnimeSprite(R.mipmap.enemy_01, 10);
-        animSprite.setPosition(450f, 450f, 90f);
-
         add(Layer.ui, score);
-        add(Layer.enemy, animSprite);
         add(Layer.controller, new CollisionChecker(this));
 
         add(Layer.controller, new TurnPoint(0, Metrics.height - 100, speed, 0));
