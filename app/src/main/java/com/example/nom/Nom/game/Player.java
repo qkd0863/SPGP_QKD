@@ -1,6 +1,7 @@
 package com.example.nom.Nom.game;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.example.nom.R;
@@ -10,16 +11,38 @@ import com.example.nom.framework.IBoxCollidable;
 import com.example.nom.framework.ILayerProvider;
 import com.example.nom.framework.Metrics;
 
+import android.view.MotionEvent;
+
 public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
+    public enum State {
+        running, jump, hurt
+    }
+
+    protected State state = State.running;
+    protected static Rect[][] srcRectsArray = {
+            makeRects(100, 101, 102, 103), // State.running
+            makeRects(7, 8),               // State.jump
+            makeRects(503, 504),           // State.hurt
+    };
+    protected static Rect[] makeRects(int... indices) {
+        Rect[] rects = new Rect[indices.length];
+        for (int i = 0; i < indices.length; i++) {
+            int idx = indices[i];
+            int l = 72 + (idx % 100) * 272;
+            int t = 132 + (idx / 100) * 272;
+            rects[i] = new Rect(l, t, l + 140, t + 140);
+        }
+        return rects;
+    }
     private static final float RADIUS = 125f;
     private float angle;
     private float prevDx, prevDy;
-    private float bounceTimer = 0f;  
+    private float bounceTimer = 0f;
     private static final float BOUNCE_DELAY = 0.7f;
     private static final float BOUNCE_POWER = 0.7f;
 
     public Player() {
-        super(R.mipmap.cookie_player_run, 8, 4);
+        super(R.mipmap.cookie_player_sheet, 8);
 
 
         float r = 50f;
@@ -35,8 +58,13 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         return dstRect;
     }
 
+    @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas); // 직접 그려도 되고 super 를 불러도 된다.
+        long now = System.currentTimeMillis();
+        float time = (now - createdOn) / 1000.0f;
+        Rect[] rects = srcRectsArray[state.ordinal()];
+        int frameIndex = (int)(time * fps) % rects.length;
+        canvas.drawBitmap(bitmap, rects[frameIndex], dstRect, null);
     }
 
     public void update() {
@@ -59,6 +87,23 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
                 bounceTimer = BOUNCE_DELAY;
             }
         }
+    }
+
+    public void jump() {
+        if (state == State.running) {
+
+            state = State.jump;
+        } else {
+
+            state = State.running;
+        }
+    }
+
+    public boolean onTouch(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            jump();
+        }
+        return false;
     }
 
     private void move(float frameTime) {
@@ -105,6 +150,10 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
             dstRect.offset(0, diff);
             dy = -dy * BOUNCE_POWER;
             collided = true;
+        }
+
+        if(collided){
+            state=State.hurt;
         }
 
         return collided;

@@ -4,9 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class AnimeSprite extends Sprite {
-    protected final float fps;
-    protected final int frameCount;
-    protected final int frameWidth, frameHeight;
+    protected float fps;
+    protected int frameCount;
+    protected int frameWidth;
+    protected int frameHeight;
     protected final long createdOn;
 
     public AnimeSprite(int mipmapId, float fps) {
@@ -31,7 +32,28 @@ public class AnimeSprite extends Sprite {
         createdOn = System.currentTimeMillis();
     }
 
+    private void setFrameInfo(float fps, int frameCount) {
+        this.fps = fps;
+        int imageWidth = bitmap.getWidth();
+        int imageHeight = bitmap.getHeight();
+        if (frameCount == 0) {
+            this.frameWidth = imageHeight;
+            this.frameHeight = imageHeight;
+            this.frameCount = imageWidth / imageHeight;
+        } else {
+            this.frameWidth = imageWidth / frameCount;
+            this.frameHeight = imageHeight;
+            this.frameCount = frameCount;
+        }
+    }
 
+    public void setImageResourceId(int mipmapId, float fps) {
+        setImageResourceId(mipmapId, fps, 0);
+    }
+    public void setImageResourceId(int mipmapId, float fps, int frameCount) {
+        super.setImageResourceId(mipmapId);
+        setFrameInfo(fps, frameCount);
+    }
     @Override
     public void draw(Canvas canvas) {
         long now = System.currentTimeMillis();

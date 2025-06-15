@@ -17,12 +17,13 @@ import java.util.ArrayList;
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
 
-    private Player player;
+    private final Player player;
+
     private final Score score;
     private float speed = 200;
 
     public enum Layer {
-        enemy, fighter, ui, controller;
+        enemy, player, ui, controller;
         public static final int COUNT = values().length;
     }
 
@@ -33,8 +34,7 @@ public class MainScene extends Scene {
 
         this.player = new Player();
         add(player);
-        player.setX(800);
-        player.setY(Metrics.height);
+        player.setPosition(50, 1550, 100, 100);
 
         this.score = new Score(R.mipmap.number_24x32, 850f, 50f, 60f);
         score.setScore(0);
@@ -74,9 +74,9 @@ public class MainScene extends Scene {
         }
     }
 
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        return false;
+        return player.onTouch(event);
     }
 
 }

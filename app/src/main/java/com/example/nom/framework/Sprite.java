@@ -18,7 +18,9 @@ public class Sprite implements IGameObject {
             bitmap = BitmapPool.get(mipmapId);
         }
     }
-
+    public void setImageResourceId(int mipmapId) {
+        bitmap = BitmapPool.get(mipmapId);
+    }
     public void setPosition(float x, float y, float radius) {
         this.x = x;
         this.y = y;
@@ -50,4 +52,16 @@ public class Sprite implements IGameObject {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
     }
+
+    public void setX(float x) {
+        this.x = x;
+        RectUtil.setRect(dstRect, x, y, width, height);
+    }
+
+    public void setY(float y) {
+        this.y = y;
+        RectUtil.setRect(dstRect, x, y, width, height);
+    }
 }
+
+
