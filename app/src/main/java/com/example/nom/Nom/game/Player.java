@@ -15,14 +15,15 @@ import android.view.MotionEvent;
 
 public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
     public enum State {
-        running, jump, hurt
+        running, rotating, jump, hurt
     }
 
     protected State state = State.running;
     protected static Rect[][] srcRectsArray = {
-            makeRects(100, 101, 102, 103), // State.running
-            makeRects(7, 8),               // State.jump
-            makeRects(503, 504),           // State.hurt
+            makeRects(100, 101, 102, 103), // running
+            makeRects(100, 101, 102, 103), // rotating (같은 프레임 사용)
+            makeRects(7, 8),               // jump
+            makeRects(503, 504),           // hurt
     };
 
     protected static Rect[] makeRects(int... indices) {
@@ -37,21 +38,28 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
     }
 
     private static final float RADIUS = 125f;
+
     private float angle;
     private float prevDx, prevDy;
     private float bounceTimer = 0f;
     private static final float BOUNCE_DELAY = 0.7f;
     private static final float BOUNCE_POWER = 0.7f;
 
+ 
+    private float rotation = 0f;
+    private float rotationSpeed = 0f;
+    private float remainingRotation = 0f;
+
+    private static final float DEFAULT_ROTATION_SPEED = -720f;
+    private static final float ROTATION_ANGLE = 90f;
+
     public Player() {
         super(R.mipmap.cookie_player_sheet, 8);
-
 
         float r = 50f;
         float cx = r * 2;
         float y = Metrics.height - 4 * r;
         this.dx = 200;
-
 
         dstRect.set(cx - r, y, cx + r, y + 2 * r);
     }
@@ -66,37 +74,63 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         float time = (now - createdOn) / 1000.0f;
         Rect[] rects = srcRectsArray[state.ordinal()];
         int frameIndex = (int) (time * fps) % rects.length;
+
+        canvas.save();
+        float cx = dstRect.centerX();
+        float cy = dstRect.centerY();
+        canvas.rotate(rotation, cx, cy);
         canvas.drawBitmap(bitmap, rects[frameIndex], dstRect, null);
+        canvas.restore();
     }
 
     public void update() {
         float frameTime = GameView.view.getFrameTime() > 0 ? GameView.view.getFrameTime() : 0.016f;
 
+
+        if (state == State.rotating) {
+            float deltaRotation = Math.abs(rotationSpeed) * frameTime;
+
+            if (deltaRotation >= remainingRotation) {
+                deltaRotation = remainingRotation;
+                state = State.running;
+            }
+
+            rotation += deltaRotation * Math.signum(rotationSpeed);
+            remainingRotation -= deltaRotation;
+        }
+
+        if (state == State.running || state == State.jump) {
+            move(frameTime);
+        }
+
         if (bounceTimer > 0f) {
             bounceTimer -= frameTime;
-
             move(frameTime);
-
             if (bounceTimer <= 0f) {
                 dx = prevDx;
                 dy = prevDy;
                 state = State.running;
             }
         } else {
-            move(frameTime);
-
             if (checkCollision()) {
                 bounceTimer = BOUNCE_DELAY;
             }
         }
     }
 
+
+    public void startRotation() {
+        if (state != State.rotating) {
+            state = State.rotating;
+            rotationSpeed = DEFAULT_ROTATION_SPEED;
+            remainingRotation = ROTATION_ANGLE;
+        }
+    }
+
     public void jump() {
         if (state == State.running) {
-
             state = State.jump;
         } else {
-
             state = State.running;
         }
     }
@@ -117,7 +151,6 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         dstRect.offset(timedDx, timedDy);
     }
 
-
     private boolean checkCollision() {
         boolean collided = false;
 
@@ -126,7 +159,6 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         float minY = 0;
         float maxY = Metrics.height;
 
-        // X축 충돌
         if (dstRect.left < minX) {
             float diff = minX - dstRect.left;
             dstRect.offset(diff, 0);
@@ -139,8 +171,6 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
             dx = -dx * BOUNCE_POWER;
             collided = true;
         }
-
-        // Y축 충돌
         if (dstRect.top < minY) {
             float diff = minY - dstRect.top;
             dstRect.offset(0, diff);
