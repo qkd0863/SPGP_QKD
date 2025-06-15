@@ -45,7 +45,7 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
     private static final float BOUNCE_DELAY = 0.7f;
     private static final float BOUNCE_POWER = 0.7f;
 
- 
+
     private float rotation = 0f;
     private float rotationSpeed = 0f;
     private float remainingRotation = 0f;
@@ -189,6 +189,32 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         }
 
         return collided;
+    }
+
+    public void snapToWall(TurnPoint turnPoint) {
+        float halfWidth = dstRect.width() / 2;
+        float halfHeight = dstRect.height() / 2;
+
+        float tolerance = 20f; // TurnPoint를 구분하는 허용 오차
+
+        if (Math.abs(turnPoint.getX() - 0) < tolerance) {
+            // 왼쪽 벽
+            x = halfWidth;
+        } else if (Math.abs(turnPoint.getX() - (Metrics.width - 100)) < tolerance) {
+            // 오른쪽 벽
+            x = Metrics.width - halfWidth;
+        }
+
+        if (Math.abs(turnPoint.getY() - 0) < tolerance) {
+            // 상단 벽
+            y = halfHeight;
+        } else if (Math.abs(turnPoint.getY() - (Metrics.height - 100)) < tolerance) {
+            // 하단 벽
+            y = Metrics.height - halfHeight;
+        }
+
+        // dstRect 갱신
+        dstRect.set(x - halfWidth, y - halfHeight, x + halfWidth, y + halfHeight);
     }
 
     public void setDx(float _dx) {

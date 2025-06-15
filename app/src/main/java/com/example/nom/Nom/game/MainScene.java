@@ -69,6 +69,7 @@ public class MainScene extends Scene {
                 Log.d(TAG, "TurnPoint 충돌 - 방향 전환");
                 player.setDx(point.getPointx());
                 player.setDy(point.getPointy());
+                player.snapToWall(point);
                 player.startRotation();
                 break;
             }

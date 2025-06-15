@@ -47,4 +47,12 @@ public class TurnPoint extends Sprite implements IBoxCollidable, ILayerProvider<
     public float getPointy() {
         return pointy;
     }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
 }
