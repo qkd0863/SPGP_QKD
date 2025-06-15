@@ -5,6 +5,7 @@ import android.graphics.RectF;
 
 import com.example.nom.R;
 import com.example.nom.framework.AnimeSprite;
+import com.example.nom.framework.GameView;
 import com.example.nom.framework.IBoxCollidable;
 import com.example.nom.framework.ILayerProvider;
 import com.example.nom.framework.Metrics;
@@ -12,6 +13,10 @@ import com.example.nom.framework.Metrics;
 public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
     private static final float RADIUS = 125f;
     private float angle;
+    private float prevDx, prevDy;
+    private float bounceTimer = 0f;  
+    private static final float BOUNCE_DELAY = 0.7f;
+    private static final float BOUNCE_POWER = 0.7f;
 
     public Player() {
         super(R.mipmap.cookie_player_run, 8, 4);
@@ -35,20 +40,91 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
     }
 
     public void update() {
-        super.update();
+        float frameTime = GameView.view.getFrameTime() > 0 ? GameView.view.getFrameTime() : 0.016f;
 
+        if (bounceTimer > 0f) {
+            bounceTimer -= frameTime;
+
+            move(frameTime);
+
+            if (bounceTimer <= 0f) {
+
+                dx = prevDx;
+                dy = prevDy;
+            }
+        } else {
+            move(frameTime);
+
+            if (checkCollision()) {
+                bounceTimer = BOUNCE_DELAY;
+            }
+        }
+    }
+
+    private void move(float frameTime) {
+        float timedDx = dx * frameTime;
+        float timedDy = dy * frameTime;
+
+        x += timedDx;
+        y += timedDy;
+        dstRect.offset(timedDx, timedDy);
+    }
+
+
+    private boolean checkCollision() {
+        boolean collided = false;
+
+        float minX = 0;
+        float maxX = Metrics.width;
+        float minY = 0;
+        float maxY = Metrics.height;
+
+        // X축 충돌
+        if (dstRect.left < minX) {
+            float diff = minX - dstRect.left;
+            dstRect.offset(diff, 0);
+            dx = -dx * BOUNCE_POWER;
+            collided = true;
+        }
+        if (dstRect.right > maxX) {
+            float diff = maxX - dstRect.right;
+            dstRect.offset(diff, 0);
+            dx = -dx * BOUNCE_POWER;
+            collided = true;
+        }
+
+        // Y축 충돌
+        if (dstRect.top < minY) {
+            float diff = minY - dstRect.top;
+            dstRect.offset(0, diff);
+            dy = -dy * BOUNCE_POWER;
+            collided = true;
+        }
+        if (dstRect.bottom > maxY) {
+            float diff = maxY - dstRect.bottom;
+            dstRect.offset(0, diff);
+            dy = -dy * BOUNCE_POWER;
+            collided = true;
+        }
+
+        return collided;
     }
 
     public void setDx(float _dx) {
         this.dx = _dx;
+        prevDx = dx;
+
     }
+
     public void setDy(float _dy) {
         this.dy = _dy;
+        prevDy = dy;
     }
 
     public void setX(float _x) {
         this.x = _x;
     }
+
     public void setY(float _y) {
         this.y = _y;
     }
