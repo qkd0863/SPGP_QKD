@@ -24,6 +24,7 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
             makeRects(7, 8),               // State.jump
             makeRects(503, 504),           // State.hurt
     };
+
     protected static Rect[] makeRects(int... indices) {
         Rect[] rects = new Rect[indices.length];
         for (int i = 0; i < indices.length; i++) {
@@ -34,6 +35,7 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         }
         return rects;
     }
+
     private static final float RADIUS = 125f;
     private float angle;
     private float prevDx, prevDy;
@@ -63,7 +65,7 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         long now = System.currentTimeMillis();
         float time = (now - createdOn) / 1000.0f;
         Rect[] rects = srcRectsArray[state.ordinal()];
-        int frameIndex = (int)(time * fps) % rects.length;
+        int frameIndex = (int) (time * fps) % rects.length;
         canvas.drawBitmap(bitmap, rects[frameIndex], dstRect, null);
     }
 
@@ -76,9 +78,9 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
             move(frameTime);
 
             if (bounceTimer <= 0f) {
-
                 dx = prevDx;
                 dy = prevDy;
+                state = State.running;
             }
         } else {
             move(frameTime);
@@ -152,8 +154,8 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
             collided = true;
         }
 
-        if(collided){
-            state=State.hurt;
+        if (collided) {
+            state = State.hurt;
         }
 
         return collided;
@@ -162,7 +164,6 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
     public void setDx(float _dx) {
         this.dx = _dx;
         prevDx = dx;
-
     }
 
     public void setDy(float _dy) {
