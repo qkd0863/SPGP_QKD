@@ -33,6 +33,7 @@ public class Score implements IGameObject {
 
     @Override
     public void update() {
+        add(1);
         int diff = score - displayScore;
         if (diff == 0) return;
         if (-10 < diff && diff < 0) {
