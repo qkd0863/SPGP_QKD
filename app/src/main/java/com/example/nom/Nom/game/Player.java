@@ -38,7 +38,8 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         }
         return rects;
     }
-
+    private int maxHp = 3;
+    private int currentHp = 3;
     private float atkTimer = 0f;
     private static final float ATK_DURATION = 0.5f;
     private static final float RADIUS = 125f;
@@ -244,6 +245,19 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
 
     public void setY(float _y) {
         this.y = _y;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public int getCurrentHp() {
+        return currentHp;
+    }
+
+    public void takeDamage(int amount) {
+        currentHp -= amount;
+        if (currentHp < 0) currentHp = 0;
     }
 
     @Override

@@ -41,6 +41,7 @@ public class MainScene extends Scene {
 
 
         add(Layer.ui, score);
+        add(Layer.ui, new HpUi(player));
         add(Layer.controller, new CollisionChecker(this));
         add(Layer.controller, new EnemyGenerator(this));
 
@@ -88,9 +89,11 @@ public class MainScene extends Scene {
             }
         }
     }
+
     public Player getPlayer() {
         return player;
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return player.onTouch(event);
