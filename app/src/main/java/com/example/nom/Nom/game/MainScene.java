@@ -40,8 +40,6 @@ public class MainScene extends Scene {
         score.setScore(0);
 
 
-
-
         add(Layer.ui, score);
         add(Layer.controller, new CollisionChecker(this));
         add(Layer.controller, new EnemyGenerator(this));
@@ -70,6 +68,22 @@ public class MainScene extends Scene {
                 player.setDy(point.getPointy());
                 player.snapToWall(point);
                 player.startRotation();
+                break;
+            }
+        }
+    }
+
+    public void checkEnemyCollision() {
+        ArrayList<IGameObject> enemy = objectsAt(Layer.enemy);
+        Player player = this.player;
+
+        for (IGameObject obj : enemy) {
+            if (!(obj instanceof Enemy)) continue;
+            Enemy Enemy = (Enemy) obj;
+            if (CollisionHelper.collides(Enemy, player)) {
+
+                this.remove(Enemy);
+                this.addScore(200);
                 break;
             }
         }

@@ -33,4 +33,11 @@ public class NomActivity extends GameActivity {
             ((MainScene) scene).checkTurnPointCollision();
         }
     }
+
+    public void AtkButton(View view) {
+        Scene scene = GameView.view.getTopScene();
+        if (scene instanceof MainScene) {
+            ((MainScene) scene).checkEnemyCollision();
+        }
+    }
 }

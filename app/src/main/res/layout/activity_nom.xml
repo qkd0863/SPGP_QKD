@@ -17,5 +17,12 @@
         android:onClick="JumpButton"
         android:text="Jump" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:onClick="AtkButton"
+        android:text="Atk" />
+
 
 </FrameLayout>
