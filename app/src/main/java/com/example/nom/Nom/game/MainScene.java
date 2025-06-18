@@ -93,7 +93,16 @@ public class MainScene extends Scene {
     public Player getPlayer() {
         return player;
     }
-
+    public void checkPlayerHp() {
+        if (player.getCurrentHp() <= 0) {
+            GameView.view.pushScene(new GameOverScene());
+        }
+    }
+    @Override
+    public void update() {
+        super.update();
+        checkPlayerHp();
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return player.onTouch(event);

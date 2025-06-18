@@ -13,7 +13,7 @@ public class GameOverScene extends Scene {
 
     public GameOverScene() {
         textPaint.setColor(Color.RED);
-        textPaint.setTextSize(160f);
+        textPaint.setTextSize(120f);
         textPaint.setTextAlign(Paint.Align.CENTER);
     }
 
