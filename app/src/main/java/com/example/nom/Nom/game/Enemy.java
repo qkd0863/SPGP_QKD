@@ -62,7 +62,9 @@ public class Enemy extends Sprite implements IBoxCollidable , ILayerProvider<Mai
             }
         }
     }
-
+    public RectF getDstRect() {
+        return dstRect;
+    }
     @Override
     public MainScene.Layer getLayer() {
         return MainScene.Layer.enemy;

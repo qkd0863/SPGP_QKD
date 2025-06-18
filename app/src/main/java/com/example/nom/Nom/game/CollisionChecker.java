@@ -1,6 +1,7 @@
 package com.example.nom.Nom.game;
 
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.util.Log;
 
 import com.example.nom.framework.CollisionHelper;
@@ -19,7 +20,6 @@ public class CollisionChecker implements IGameObject {
     @Override
     public void update() {
         ArrayList<IGameObject> enemies = scene.objectsAt(MainScene.Layer.enemy);
-        ArrayList<IGameObject> points = scene.objectsAt(MainScene.Layer.controller);
 
         Player player = null;
         for (int i = enemies.size() - 1; i >= 0; i--) {
@@ -31,19 +31,17 @@ public class CollisionChecker implements IGameObject {
 
         if (player == null) return;
 
+        for (IGameObject obj : enemies) {
+            if (!(obj instanceof Enemy)) continue;
+            Enemy enemy = (Enemy) obj;
 
-//        for (int i1 = enemies.size() - 1; i1 >= 0; i1--) {
-//            if (!(enemies.get(i1) instanceof Enemy)) continue;
-//            Enemy ball = (Enemy) enemies.get(i1);
-//
-//            if (CollisionHelper.collides(ball, player)) {
-//                Log.d(TAG, "Collision !!");
-//                scene.remove(ball);
-//                scene.addScore(200);
-//                break;
-//            }
-//
-//        }
+
+            if (RectF.intersects(player.getDstRect(), enemy.getDstRect())) {
+                player.takeDamage(1);
+                break;
+            }
+        }
+
     }
 
     @Override

@@ -43,7 +43,9 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
     private float atkTimer = 0f;
     private static final float ATK_DURATION = 0.5f;
     private static final float RADIUS = 125f;
-
+    private boolean invincible = false;
+    private float invincibleTimer = 0f;
+    private static final float HURT_DURATION = 1.0f; // 1초 무적
     private float angle;
     private float prevDx, prevDy;
     private float bounceTimer = 0f;
@@ -98,6 +100,14 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
             }
         }
 
+        if (invincible) {
+            invincibleTimer -= frameTime;
+            if (invincibleTimer <= 0f) {
+                invincible = false;
+                if (state == State.hurt) state = State.running;
+            }
+        }
+
         if (state == State.rotating) {
             float deltaRotation = Math.abs(rotationSpeed) * frameTime;
 
@@ -110,7 +120,7 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
             remainingRotation -= deltaRotation;
         }
 
-        if (state == State.running || state == State.jump) {
+        if (state == State.running || state == State.jump || state == State.hurt) {
             move(frameTime);
         }
 
@@ -256,10 +266,18 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
     }
 
     public void takeDamage(int amount) {
+        if (invincible || state == State.hurt) return;
+
         currentHp -= amount;
         if (currentHp < 0) currentHp = 0;
-    }
 
+        state = State.hurt;
+        invincible = true;
+        invincibleTimer = HURT_DURATION;
+    }
+    public RectF getDstRect() {
+        return dstRect;
+    }
     @Override
     public MainScene.Layer getLayer() {
         return MainScene.Layer.enemy;
