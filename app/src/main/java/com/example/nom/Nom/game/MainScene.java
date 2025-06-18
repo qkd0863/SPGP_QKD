@@ -40,12 +40,11 @@ public class MainScene extends Scene {
         score.setScore(0);
 
 
-        for (int i = 0; i < 10; i++) {
-            add(Enemy.random());
-        }
+
 
         add(Layer.ui, score);
         add(Layer.controller, new CollisionChecker(this));
+        add(Layer.controller, new EnemyGenerator(this));
 
         add(Layer.controller, new TurnPoint(0, Metrics.height - 100, speed, 0));
         add(Layer.controller, new TurnPoint(Metrics.width - 100, 0, -speed, 0));
