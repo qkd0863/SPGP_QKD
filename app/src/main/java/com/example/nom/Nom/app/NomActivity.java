@@ -38,6 +38,7 @@ public class NomActivity extends GameActivity {
         Scene scene = GameView.view.getTopScene();
         if (scene instanceof MainScene) {
             ((MainScene) scene).checkEnemyCollision();
+            ((MainScene) scene).getPlayer().attack();
         }
     }
 }

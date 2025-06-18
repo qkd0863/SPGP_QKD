@@ -88,7 +88,9 @@ public class MainScene extends Scene {
             }
         }
     }
-
+    public Player getPlayer() {
+        return player;
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return player.onTouch(event);

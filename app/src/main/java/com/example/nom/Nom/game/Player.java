@@ -15,15 +15,17 @@ import android.view.MotionEvent;
 
 public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvider<MainScene.Layer> {
     public enum State {
-        running, rotating, jump, hurt
+        // atk == doubleJump
+        running, rotating, jump, hurt, atk
     }
 
     protected State state = State.running;
     protected static Rect[][] srcRectsArray = {
             makeRects(100, 101, 102, 103), // running
-            makeRects(100, 101, 102, 103), // rotating (같은 프레임 사용)
+            makeRects(100, 101, 102, 103), // rotating
             makeRects(7, 8),               // jump
             makeRects(503, 504),           // hurt
+            makeRects(1, 2, 3, 4),         // doubleJump == atk
     };
 
     protected static Rect[] makeRects(int... indices) {
@@ -37,6 +39,8 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
         return rects;
     }
 
+    private float atkTimer = 0f;
+    private static final float ATK_DURATION = 0.5f;
     private static final float RADIUS = 125f;
 
     private float angle;
@@ -86,6 +90,12 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
     public void update() {
         float frameTime = GameView.view.getFrameTime() > 0 ? GameView.view.getFrameTime() : 0.016f;
 
+        if (state == State.atk) {
+            atkTimer -= frameTime;
+            if (atkTimer <= 0f) {
+                state = State.running;
+            }
+        }
 
         if (state == State.rotating) {
             float deltaRotation = Math.abs(rotationSpeed) * frameTime;
@@ -128,13 +138,14 @@ public class Player extends AnimeSprite implements IBoxCollidable, ILayerProvide
     }
 
     public void jump() {
-        if (state == State.running) {
-            state = State.jump;
-        } else {
-            state = State.running;
+
+    }
+    public void attack() {
+        if (state == State.running || state == State.jump) {
+            state = State.atk;
+            atkTimer = ATK_DURATION;
         }
     }
-
     public boolean onTouch(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             jump();
