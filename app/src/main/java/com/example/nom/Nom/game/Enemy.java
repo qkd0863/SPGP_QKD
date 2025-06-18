@@ -14,7 +14,7 @@ public class Enemy extends Sprite implements IBoxCollidable , ILayerProvider<Mai
 
     private static final float BALL_RADIUS = 30f;
     private static final float SPEED = 400f;
-    private static final float COLLISION_SIZE = -20f;
+    private static final float COLLISION_SIZE = -50f;
 
     private static final Random random = new Random();
 

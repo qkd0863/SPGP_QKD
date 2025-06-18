@@ -6,9 +6,9 @@ import com.example.nom.framework.GameView;
 import java.util.Random;
 
 public class EnemyGenerator implements IGameObject {
-    private static final float INITIAL_SPAWN_INTERVAL = 2.0f;
+    private static final float INITIAL_SPAWN_INTERVAL = 4.0f;
     private static final int INITIAL_ENEMIES_PER_WAVE = 3;
-    private static final float DIFFICULTY_UP_INTERVAL = 15.0f;
+    private static final float DIFFICULTY_UP_INTERVAL = 100.0f;
 
     private float elapsed = 0f;
     private float timeSinceStart = 0f;
